@@ -1,7 +1,7 @@
 <br />
 <div class="col-md-6 col-lg-6" style="margin-left: 20px;">
-<form class='form-style-5'  action="<?= base_url(); ?>ari/insert_company" method="post">
-    <h2>Company Registration</h2>
+<form class='form-style-5'  action="<?= base_url(); ?>company/manager/insert_manager" method="post">
+    <h2>Add Project Manager</h2>
     <hr />
     <!-- show error messages if the form validation fails -->
     <?php if ($this->session->flashdata()) { ?>
@@ -10,8 +10,8 @@
         </div>
     <?php } ?>
     <div class="form-group">
-        <label for="name">Company Name</label>
-        <input type="text" name="company_name" required class="form-control" id="company_name">
+        <label for="name">Project Manager Name</label>
+        <input type="text" name="full_name" required class="form-control" id="full_name">
     </div>
 
     <div class="form-group">
@@ -32,7 +32,7 @@
     </div>
     <div>
 
-    <input class="btn btn-primary" type="submit" value="Register">
+    <input class="btn btn-primary" type="submit" value="ADD MANAGER">
 </div>
 </form>
 </div>

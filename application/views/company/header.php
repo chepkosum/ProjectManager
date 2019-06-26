@@ -1,9 +1,8 @@
-
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>ARI Admin - Dashboard</title>
+<title>Company- Dashboard</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -30,7 +29,9 @@
 
 img {
   border-radius: 5px 5px 0 0;
-}.container {
+}
+
+.container {
   padding: 2px 16px;
 }
 #topNav .dropdown-toggle::after {
@@ -44,7 +45,6 @@ img {
 .wrapper {
   display: flex;
   align-items: stretch;
-
 }
 /* Sidebar */
 #sidebar {
@@ -90,7 +90,6 @@ img {
 #wrapper-content {
   width: 100%;
   transition: ease-in-out 0.5s;
-
 }
 .card-body-icon{
   position: absolute;
@@ -103,7 +102,6 @@ img {
 footer .footer-container{
   height: 100px;
   background-color: #EDEDED;
-
 }
 footer .copyright{
   line-height: 100px;
@@ -137,7 +135,7 @@ $(document).ready(function () {
 
 <body id="pageTop">
 <!-- Top Navbar -->
-<nav class="navbar navbar-expand navbar-dark bg-dark fixed-top" id="topNav"> <a href="index.html" class="navbar-brand">ARI Developer Admin</a>
+<nav class="navbar navbar-expand navbar-dark bg-dark fixed-top" id="topNav"> <a href="index.html" class="navbar-brand">Company Admin</a>
   <button class="btn btn-link btn-sm text-white order-1 order-sm-0" type="button" id="sidebarToggle"><span class="fa fa-bars"></span></button>
   <form class="d-none d-sm-inline-block form-inline ml-auto">
     <div class="input-group">
@@ -166,18 +164,20 @@ $(document).ready(function () {
     </li>
   </ul>
 </nav>
-<div class="wrapper mt-5"> 
+<div class="wrapper mt-5">
   <!-- Sidebar -->
   <nav id="sidebar">
     <ul class="navbar-nav">
       <li class="nav-item active pt-3"><a href="index.html" class="nav-link text-white"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a> </li>
-      <li class="nav-item pt-3" id="pageItem"><a href="#pageSubMenu" class="nav-link dropdown-toggle text-white" data-toggle="collapse" aria-expanded="false" role="button"><i class="fa fa-folder"></i> <span>Companies</span></a>
+      <li class="nav-item pt-3" id="pageItem"><a href="#pageSubMenu" class="nav-link dropdown-toggle text-white" data-toggle="collapse" aria-expanded="false" role="button"><i class="fa fa-folder"></i> <span>Manage</span></a>
         <div class="dropdown-menu mr-4" id="pageSubMenu">
-          <h6 class="dropdown-header">Companies:</h6>
-          <a href="<?=base_url().'ari/all_companies';?>" class="dropdown-item">All Companies</a> <a href="<?=base_url().'ari/add_company';?>" class="dropdown-item">Add Company</a>
-          <div class="dropdown-divider"></div>
-          <h6 class="dropdown-header">Geographical locations</h6>
-          <a href="#" class="dropdown-item">Local Companies</a><a href="#" class="dropdown-item">International Companies</a> </div>
+          <h6 class="dropdown-header">Project management</h6>
+          <a href="<?=base_url().'company/manager/all_managers';?>" class="dropdown-item">Project Managers</a>
+          <a href="<?=base_url().'company/manager/add_manager';?>" class="dropdown-item">Add project Manager</a>
+          <a href="<?=base_url().'company/project/all_projects';?>" class="dropdown-item">Projects</a>
+          <a href="<?=base_url().'company/project/add_project';?>" class="dropdown-item">Add project</a>
+          
+        </div>
       </li>
       <li class="nav-item pt-3"><a href="#" class="nav-link text-white"><i class="fa fa-area-chart"></i> <span>Charts</span></a> </li>
       <li class="nav-item pt-3"><a href="index.html" class="nav-link text-white"><i class="fa fa-table"></i> <span>Reports</span></a> </li>

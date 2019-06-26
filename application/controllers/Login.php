@@ -23,7 +23,7 @@ class Login extends CI_Controller {
                 redirect(base_url().'ari');
             }
         if($level==='company'){
-                $this->load->view('company_dashboard');
+                redirect(base_url().'company/manager');
             }
         if($level==='manager'){
                 $this->load->view('manager_dashboard');
@@ -50,8 +50,16 @@ class Login extends CI_Controller {
         //if the result is query result is 1 then valid user
         if ($check_login->num_rows()>0) {
             $data=$check_login->row_array();
+            $active=$data['active'];
+            if($active==0){
+                  $this->session->set_flashdata('msg', 'Please activate your email before logging in');
+                  redirect(base_url().'login');  
+
+            }
+                else{
             $name=$data['username'];
             $email=$data['email'];
+
             $level=$data['role'];
             $sesdata=array(
                 'username'=>$name,
@@ -65,7 +73,7 @@ class Login extends CI_Controller {
                 redirect(base_url().'ari');
             }
             elseif($level==='company'){
-                $this->load->view('company_dashboard');
+                redirect(base_url().'company/dashboard');
             }
             elseif($level==='manager'){
                 $this->load->view('manager_dashboard');
@@ -74,6 +82,7 @@ class Login extends CI_Controller {
                 redirect(base_url().'developer_dashboard');
 
             }
+        }
             //if yes then set the session 'loggin_in' as true
             
         } else {
@@ -88,8 +97,18 @@ class Login extends CI_Controller {
 
     public function logout() {
         //unset the logged_in session and redirect to login page
-        $this->session->unset_userdata('level');
+        $this->session->sess_destroy('level');
         redirect(base_url().'login');
+    }
+
+    public function activate($key){
+        $data=$this->login->account($key);
+        if ($data===true){
+
+            $this->load->view('activation_page');
+        }else{
+        echo "Wrong activation key";
+    }
     }
 
 }

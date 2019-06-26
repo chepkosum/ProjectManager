@@ -10,5 +10,14 @@ class LoginModel extends CI_Model {
 
         return $result;
     }
+    public function account($key){
+    	$query=$this->db->get_where('user_login',array('activation_key'=>$key));
+    	if($query->num_rows()>=1){
+    		$this->db->where('user_login.activation_key',$key);
+    		$infor=['active'=>1];
+    		$this->db->update('user_login',$infor);
+    		return true;
+    }
 
+}
 }

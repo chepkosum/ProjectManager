@@ -19,7 +19,7 @@ class Register extends CI_Controller {
         //check if the user is already logged in 
         //if yes redirect to the welcome page
         if ($this->session->userdata('logged_in')) {
-            redirect(base_url() . 'welcome');
+            
         }
         //load the register page views
         $this->load->view('header');
@@ -50,60 +50,52 @@ class Register extends CI_Controller {
 			$town = $this->input->post('town');
 			$username= $this->input->post('username');
             $password = sha1($this->input->post('password'));
+            $role='ari';
+            $activation_key=sha1(rand(1,1000000).$date);
+            $user_type='ari';
+            $role='ari';
 
             $data = [
-                'full_name' => $full_name, 'address' => $address, 'postal_code' => $postal_code, 'town' => $town
+                'full_name' => $full_name, 'address' => $address, 'postal_code' => $postal_code, 'town' => $town,'email'=>$email
             ];
-			$login=['username' => $username, 'email' => $email, 'password' => $password];
+			$login=['username' => $username, 'email' => $email, 'password' => $password,'role'=>$role,'activation_key'=>$activation_key];
 
             //pass the input values to the register model
-            $insert_data = $this->register->add_user($data,$login);
+            $insert_data = $this->register->add_user($data,$login );
 
             //if data inserted then set the success message and redirect to login page
             if ($insert_data) {
-                $config = array(
-                'protocol' => 'smtp',
-                'smtp_host' => 'ssl://smtp.googlemail.com',
-                'smtp_port' => 587,
-                'smtp_user' => '<a href="mailto:testsourcecodester@gmail.com" rel="nofollow">testsourcecodester@gmail.com</a>', // change it to yours
-                'smtp_pass' => 'mysourcepass', // change it to yours
-                'mailtype' => 'html',
-                'charset' => 'iso-8859-1',
-                'wordwrap' => TRUE
-            );
- 
-            $message =  "
-                        <html>
-                        <head>
-                            <title>Verification Code</title>
-                        </head>
-                        <body>
-                            <h2>Thank you for Registering.</h2>
-                            <p>Your Account:</p>
-                            <p>Email: ".$email."</p>
-                            <p>Password: ".$password."</p>
-                            <p>Please click the link below to activate your account.</p>
-                            <h4><a href='".base_url()."user/activate/".$username."/".$email."'>Activate My Account</a></h4>
-                        </body>
-                        </html>
-                        ";
- 
-            $this->load->library('email', $config);
-            $this->email->set_newline("\r\n");
-            $this->email->from($config['smtp_user']);
-            $this->email->to($email);
-            $this->email->subject('Signup Verification Email');
-            $this->email->message($message);
- 
-            //sending email
-            if($this->email->send()){
-                $this->session->set_flashdata('message','Activation code sent to email');
-            }
-            else{
-                $this->session->set_flashdata('message', $this->email->print_debugger());
- 
-            }
-                $this->session->set_flashdata('msg', 'Successfully Register, Login now!');
+               $this->load->library('email');
+
+               $this->email->initialize(array('mailtype' => 'html','validate' => TRUE,));
+                $mail_content="
+                            <html>
+                            <head>
+                            <title>Account Activation</title>
+                            </head>
+                            <body>
+                            <p>Thank you for signing up</p>
+                            <p>Username::".$username."</p>
+                        
+                            <p>Click the link below to activate</p>
+                            <p>".base_url()."login/activate/".$activation_key."</p>
+
+                            </body>
+                            </html>
+                          ";
+
+                            $this->email->from('codingcompany1@gmail.com', 'Acccount Activation');
+                            $this->email->to($email);
+                            $this->email->subject('Account Activation');
+                            $this->email->message($mail_content);
+
+                            if ($this->email->send()) {
+                             $this->session->set_flashdata('message', 'We have sent you an email,click the link to activate so that you can log in');
+                            }else{
+                            echo($this->email->print_debugger()); //Display errors if any
+                            }
+
+                $this->session->set_flashdata('msg', 'Successfully Registered');
                 redirect(base_url() . 'login');
             }
         }

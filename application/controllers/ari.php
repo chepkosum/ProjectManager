@@ -8,6 +8,18 @@ class Ari extends CI_Controller{
 		$this->load->database();
 		$this->load->model('Ari_model');
 
+		 if(!$this->session->userdata('level')){
+            redirect(base_url().'login');
+         }
+         else{
+            $level=$this->session->userdata('level');
+            if($level!='ari'){      
+            	redirect(base_url().'login');
+
+            }
+    
+           }
+
 	}
 
 	public function index(){
@@ -89,63 +101,63 @@ class Ari extends CI_Controller{
 			$address= $this->input->post('address');
 			$postal_code = $this->input->post('postal_code');
 			$town = $this->input->post('town');
+			$date = date('Y-m-d H:i:s');
+			$activation_key=sha1(rand(1,1000000).$date);
+			$country='kenya';
+			$added_by=$this->session->userdata('username');
+
 
             $data = [
-                'company_name' => $company_name, 'address' => $address, 'postal_code' => $postal_code, 'town' => $town,'email'=>$email
+                'company_name' => $company_name, 'address' => $address, 'postal_code' => $postal_code, 'town' => $town,'email'=>$email,'added_by'=>$added_by,'country'=>$country
             ];
+            $login=['activation_key'=>$activation_key,'email'=>$email];
 
             //pass the input values to the register model
-            $insert_data = $this->Ari_model->add_company($data);
+            $insert_data = $this->Ari_model->add_company($data,$login);
 
             //if data inserted then set the success message and redirect to login page
             if ($insert_data) {
-            	$this->session->set_flashdata('msg', 'Company details added successfully');
+            	$this->session->set_flashdata('msg', 'Successfully added company details');
+            	$this->load->library('email');
 
-                $config = array(
-                'protocol' => 'smtp',
-                'smtp_host' => 'ssl://smtp.googlemail.com',
-                'smtp_port' => 587,
-                'smtp_user' => '<a href="mailto:testsourcecodester@gmail.com" rel="nofollow">testsourcecodester@gmail.com</a>', // change it to yours
-                'smtp_pass' => 'mysourcepass', // change it to yours
-                'mailtype' => 'html',
-                'charset' => 'iso-8859-1',
-                'wordwrap' => TRUE
-            );
- 
-            $message =  "
-                        <html>
-                        <head>
-                            <title>Verification Code</title>
-                        </head>
-                        <body>
-                            <h2>Thank you for Registering.</h2>
-                            <p>Your Account:</p>
-                            <p>Email: ".$email."</p>
-                            <p>Please click the link below to activate your account.</p>
-                            <h4><a href='".base_url()."user/activate/".$company_name."/".$email."'>Activate My Account</a></h4>
-                        </body>
-                        </html>
-                        ";
- 
-            $this->load->library('email', $config);
-            $this->email->set_newline("\r\n");
-            $this->email->from($config['smtp_user']);
-            $this->email->to($email);
-            $this->email->subject('Signup Verification Email');
-            $this->email->message($message);
- 
-            //sending email
-            if($this->email->send()){
-                $this->session->set_flashdata('message','Activation code sent to email');
-            }
-            else{
-                $this->session->set_flashdata('message', $this->email->print_debugger());
- 
-            }
-                $this->session->set_flashdata('msg', 'Successfully updated');
-                redirect(base_url() . 'ari/login');
+               $this->email->initialize(array('mailtype' => 'html','validate' => TRUE,));
+                $mail_content="
+                            <html>
+                            <head>
+                            <title>Account Activation</title>
+                            </head>
+                            <body>
+                            <p>Thank you for signing up</p>
+                            <p>Company::".$company_name."</p>
+                        
+                            <p>Click the link below to activate</p>
+                            <p>".base_url()."activate/index/".$activation_key."</p>
+
+                            </body>
+                            </html>
+                          ";
+
+                            $this->email->from('codingcompany1@gmail.com', 'Acccount Activation');
+                            $this->email->to($email);
+                            $this->email->subject('Account Activation');
+                            $this->email->message($mail_content);
+
+                            if ($this->email->send()) {
+                             $this->session->set_flashdata('message', 'Message sent to email for verification');
+                            }else{
+                            echo($this->email->print_debugger()); //Display errors if any
+                            }
+
+                        redirect(base_url() . 'ari/all_companies');
+                    }
+                }
             }
         }
-	}
-}
-?>
+    
+
+
+                
+ 
+           
+
+	?>
