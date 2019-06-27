@@ -13,27 +13,7 @@
 <style type="text/css">
   
   /* CSS Document */
-  .card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  width: 40%;
-  border-radius: 5px;
-  float: left;
-  margin-left: 10px;
-  margin-top: 10px;
-}
-
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-img {
-  border-radius: 5px 5px 0 0;
-}
-
-.container {
-  padding: 2px 16px;
-}
+  
 #topNav .dropdown-toggle::after {
   display: none;
 }
@@ -168,15 +148,20 @@ $(document).ready(function () {
   <!-- Sidebar -->
   <nav id="sidebar">
     <ul class="navbar-nav">
-      <li class="nav-item active pt-3"><a href="index.html" class="nav-link text-white"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a> </li>
+      <li class="nav-item active pt-3"><a href="<?=base_url().'company/Dashboard';?>" class="nav-link text-white"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a> </li>
       <li class="nav-item pt-3" id="pageItem"><a href="#pageSubMenu" class="nav-link dropdown-toggle text-white" data-toggle="collapse" aria-expanded="false" role="button"><i class="fa fa-folder"></i> <span>Manage</span></a>
         <div class="dropdown-menu mr-4" id="pageSubMenu">
-          <h6 class="dropdown-header">Project management</h6>
+          <h6 class="dropdown-header">Managers</h6>
           <a href="<?=base_url().'company/manager/all_managers';?>" class="dropdown-item">Project Managers</a>
           <a href="<?=base_url().'company/manager/add_manager';?>" class="dropdown-item">Add project Manager</a>
-          <a href="<?=base_url().'company/project/all_projects';?>" class="dropdown-item">Projects</a>
-          <a href="<?=base_url().'company/project/add_project';?>" class="dropdown-item">Add project</a>
-          
+          <div class="dropdown-divider"></div>
+          <h6 class="dropdown-header">Projects</h6>
+          <a href="<?=base_url().'company/project/all_projects';?>" class="dropdown-item">All projects</a>
+          <a href="<?=base_url().'company/project/add_project';?>" class="dropdown-item">Add New project</a> 
+          <div class="dropdown-divider"></div>
+          <h6 class="dropdown-header">Developres</h6>
+          <a href="<?=base_url().'company/project/all_projects';?>" class="dropdown-item">All Developers</a>
+          <a href="<?=base_url().'company/project/add_project';?>" class="dropdown-item">Add Developer</a>
         </div>
       </li>
       <li class="nav-item pt-3"><a href="#" class="nav-link text-white"><i class="fa fa-area-chart"></i> <span>Charts</span></a> </li>

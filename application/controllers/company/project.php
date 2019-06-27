@@ -7,6 +7,17 @@ class Project extends CI_Controller{
 		$this->load->library(['form_validation','session']);
 		$this->load->database();
 		$this->load->model('company/Project_model');
+         if(!$this->session->userdata('level')){
+            redirect(base_url().'login');
+         }
+         else{
+            $level=$this->session->userdata('level');
+            if($level!='company'){      
+                redirect(base_url().'login');
+
+            }
+    
+           }
 
 	}
 

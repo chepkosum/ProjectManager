@@ -23,13 +23,13 @@ class Login extends CI_Controller {
                 redirect(base_url().'ari');
             }
         if($level==='company'){
-                redirect(base_url().'company/manager');
+                redirect(base_url().'company/Dashboard');
             }
         if($level==='manager'){
-                $this->load->view('manager_dashboard');
+                redirect(base_url().'manager/Dashboard');
             }
         if($level==='developer'){
-                redirect(base_url().'developer_dashboard');
+                redirect(base_url().'developer/Dashboard');
 
             }
         
@@ -76,10 +76,10 @@ class Login extends CI_Controller {
                 redirect(base_url().'company/dashboard');
             }
             elseif($level==='manager'){
-                $this->load->view('manager_dashboard');
+                redirect(base_url().'manager/dashboard');
             }
             else{
-                redirect(base_url().'developer_dashboard');
+                redirect(base_url().'developer/dashboard');
 
             }
         }

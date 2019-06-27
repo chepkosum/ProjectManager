@@ -7,6 +7,17 @@ class Manager extends CI_Controller{
 		$this->load->library(['form_validation','session']);
 		$this->load->database();
 		$this->load->model('company/Manager_model');
+         if(!$this->session->userdata('level')){
+            redirect(base_url().'login');
+         }
+         else{
+            $level=$this->session->userdata('level');
+            if($level!='company'){      
+                redirect(base_url().'login');
+
+            }
+    
+           }
          
 
 	}
@@ -45,10 +56,11 @@ class Manager extends CI_Controller{
 			$address= $this->input->post('address');
 			$postal_code = $this->input->post('postal_code');
 			$town = $this->input->post('town');
+    
+
 
             $data = [
-                'full_name' => $full_name, 'address' => $address, 'postal_code' => $postal_code, 'town' => $town,'email'=>$email
-            ];
+                'full_name' => $full_name, 'address' => $address, 'postal_code' => $postal_code, 'town' => $town];
 
 	        $query=$this->Manager_model->update_manager($data,$id);
 	        if($query){
@@ -93,42 +105,47 @@ class Manager extends CI_Controller{
             $user_type='manager';
             $date=$date = date('Y/m/d H:i:s');
             $activation_key=sha1(rand(1,1000000).$date);
+            $added_by=$this->session->userdata('username');
+            $company_id=$this->session->userdata('company_id');
+
 
             $data = [
-                'full_name' => $full_name, 'address' => $address, 'postal_code' => $postal_code, 'town' => $town,'email'=>$email,'user_type'=>$user_type,'activation_key'=>$activation_key
+                'full_name' => $full_name, 'address' => $address, 'postal_code' => $postal_code, 'town' => $town,'email'=>$email,'user_type'=>$user_type,'company_id'=>$company_id,'user_type'=>$user_type,'added_by'=>$added_by,'company_id'=>$company_id
             ];
+            $login=['active'=>0,'email'=>$email,'company_id'=>$company_id,'activation_key'=>$activation_key,'role'=>$user_type];
 
-            //pass the input values to the register model
-            $insert_data = $this->Manager_model->add_manager($data);
+            $query=$this->Manager_model->add_manager($data,$login);
+            if($query){
+                $this->session->set_flashdata('msg', 'Successfully added project manager,');
+                $this->load->library('email');
 
-            //if data inserted then set the success message and redirect to login page
-            if ($insert_data) {
-            	$this->session->set_flashdata('msg', 'Project Manager details added successfully');
-                $to = $email;
-                $subject = "Account Activation";
+               $this->email->initialize(array('mailtype' => 'html','validate' => TRUE,));
+                $mail_content="
+                            <html>
+                            <head>
+                            <title>Account Activation</title>
+                            </head>
+                            <body>
+                            <p>You have been added as a project manager</p>
+                            <p>Name::".$full_name."</p>
+                        
+                            <p>Click the link below to activate your account</p>
+                            <p>".base_url()."activate/index/".$activation_key."</p>
 
-                 $message = "
-                <html>
-                <head>
-                <title>Thank you</title>
-                </head>
-                <body>
-                <p>Click on the link below to activation your account</p>
-                <p>http://localhost:8080/codeigniter-reg-login-master/index.php/activate/index/".$activation_key."</p>
+                            </body>
+                            </html>
+                          ";
 
-                 </body>
-                 </html>
-                 ";
+                            $this->email->from('codingcompany1@gmail.com', 'Acccount Activation');
+                            $this->email->to($email);
+                            $this->email->subject('Account Activation');
+                            $this->email->message($mail_content);
 
-                 // Always set content-type when sending HTML email
-                 $headers = "MIME-Version: 1.0" . "\r\n";
-                 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-
-                 // More headers
-                 $headers .= 'From: <codecompany1@gmail.com>' . "\r\n";
-                //$headers .= 'Cc: myboss@example.com' . "\r\n";
-
-                mail($to,$subject,$message,$headers);
+                            if ($this->email->send()) {
+                             $this->session->set_flashdata('message', 'Message sent to email for verification');
+                            }else{
+                            echo($this->email->print_debugger()); //Display errors if any
+                            }
 
 
                 redirect(base_url() . 'company/manager/all_managers');
