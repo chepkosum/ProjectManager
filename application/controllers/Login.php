@@ -59,9 +59,12 @@ class Login extends CI_Controller {
                 else{
             $name=$data['username'];
             $email=$data['email'];
-
+            $company_id=$data['company_id'];
+            $user_id=$data['user_id'];
             $level=$data['role'];
             $sesdata=array(
+                'company_id'=>$company_id,
+                'user_id'=>$user_id,
                 'username'=>$name,
                 'email'=>$email,
                 'level'=>$level,

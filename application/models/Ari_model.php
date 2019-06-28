@@ -8,8 +8,8 @@ class Ari_model extends CI_Model{
 
     	$this->db->insert('company', $data);
 
-    	$user_id=$this->db->insert_id();
-    	$login1=array('user_id'=>$user_id);
+    	$company_id=$this->db->insert_id();
+    	$login1=array('company_id'=>$company_id);
     	$login2=$login1+$login;
 
 

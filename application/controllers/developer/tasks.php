@@ -7,17 +7,6 @@ class Project extends CI_Controller{
 		$this->load->library(['form_validation','session']);
 		$this->load->database();
 		$this->load->model('company/Project_model');
-         if(!$this->session->userdata('level')){
-            redirect(base_url().'login');
-         }
-         else{
-            $level=$this->session->userdata('level');
-            if($level!='company'){      
-                redirect(base_url().'login');
-
-            }
-    
-           }
 
 	}
 
@@ -99,10 +88,9 @@ class Project extends CI_Controller{
 			$end_date= $this->input->post('end_date');
 			$owner = $this->input->post('owner');
 			$town = $this->input->post('town');
-            $company_id=$this->session->userdata('company_id');
 
             $data = [
-                'company_name' => $company_name, 'address' => $address, 'postal_code' => $postal_code, 'town' => $town,'email'=>$email,'company_id'=>$company_id
+                'company_name' => $company_name, 'address' => $address, 'postal_code' => $postal_code, 'town' => $town,'email'=>$email
             ];
 
             //pass the input values to the register model
