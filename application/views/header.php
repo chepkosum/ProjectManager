@@ -3,6 +3,10 @@
     <head>
         <link rel="stylesheet" type="text/css" href="assets/css">
         <style type="text/css">
+
+body{
+    background-color: green;
+}
         	.form-style-5{
 	max-width: 500px;
 	padding: 10px 20px;
@@ -114,3 +118,4 @@ span{
     </head>
     <body>
         <div class="container">
+        	<h1 style="color: white; text-align: center;">ARI Project Management Tool</h1>

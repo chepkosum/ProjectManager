@@ -10,120 +10,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script src="JS/script.js"></script>
-<style type="text/css">
-  
-  /* CSS Document */
-  .card {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-  width: 40%;
-  border-radius: 5px;
-  float: left;
-  margin-left: 10px;
-  margin-top: 10px;
-}
-
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-img {
-  border-radius: 5px 5px 0 0;
-}.container {
-  padding: 2px 16px;
-}
-#topNav .dropdown-toggle::after {
-  display: none;
-}
-.navbar-nav .nav-item .nav-link .badge {
-  position: absolute;
-  font-size: 7.5px;
-  margin-left: -7.5px;
-}
-.wrapper {
-  display: flex;
-  align-items: stretch;
-
-}
-/* Sidebar */
-#sidebar {
-  min-width: 200px;
-  max-width: 200px;
-  padding-left: 20px;
-  background-color: #212529;
-}
-#sidebar:not(.dropdown-menu) {
-  transition: ease-in-out 1s;
-}
-#sidebar.active .dropdown-toggle::after {
-  display: none;
-}
-#sidebar.active:not(.dropdown-menu) {
-  min-width: 80px;
-  max-width: 80px;
-  padding-left: 0px;
-}
-#sidebar.active ul li:not(.dropdown-menu) {
-  text-align: center;
-  font-size: 12px;
-}
-#sidebar.active ul li a i {
-  position: absolute;
-  margin-top: -10px;
-  margin-left: 10px;
-}
-#sidebar.active ul li a .fa-tachometer {
-  position: absolute;
-  margin-top: -10px;
-  margin-left: 23px;
-}
-#sidebar.active #pageItem {
-  position: relative;
-}
-#sidebar.active #pageSubMenu {
-  margin-left: 85px;
-  margin-top: -40px;
-  position: absolute;
-}
-/*-------------------------------------------------------------------------*/
-#wrapper-content {
-  width: 100%;
-  transition: ease-in-out 0.5s;
-
-}
-.card-body-icon{
-  position: absolute;
-  opacity: 0.5;
-  margin-left: 150px;
-  margin-top: -10px;
-  transform: rotate(20deg);
-}
-/*-------------------------------------------------------------------------*/
-footer .footer-container{
-  height: 100px;
-  background-color: #EDEDED;
-
-}
-footer .copyright{
-  line-height: 100px;
-}
-.scroll-to-top{
-  position: fixed;
-  right: 15px;
-  bottom: 15px;
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  line-height: 46px;
-  background-color: #8E8E8E; 
-  color: #fff;
-}
-.scroll-to-top:hover{
-  color: #fff;
-}
-
-</style>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/style.css">
 <script type="text/javascript">
   // JavaScript Document
 $(document).ready(function () {
@@ -137,7 +24,7 @@ $(document).ready(function () {
 
 <body id="pageTop">
 <!-- Top Navbar -->
-<nav class="navbar navbar-expand navbar-dark bg-dark fixed-top" id="topNav"> <a href="index.html" class="navbar-brand">ARI Developer Admin</a>
+<nav class="navbar navbar-expand navbar-dark bg-dark fixed-top" id="topNav"> <a href="<?php echo base_url(); ?>ari" class="navbar-brand">ARI Developer Admin</a>
   <button class="btn btn-link btn-sm text-white order-1 order-sm-0" type="button" id="sidebarToggle"><span class="fa fa-bars"></span></button>
   <form class="d-none d-sm-inline-block form-inline ml-auto">
     <div class="input-group">
@@ -170,7 +57,7 @@ $(document).ready(function () {
   <!-- Sidebar -->
   <nav id="sidebar">
     <ul class="navbar-nav">
-      <li class="nav-item active pt-3"><a href="index.html" class="nav-link text-white"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a> </li>
+      <li class="nav-item active pt-3"><a href="<?php echo base_url(); ?>ari" class="nav-link text-white"><i class="fa fa-tachometer"></i> <span>Dashboard</span></a> </li>
       <li class="nav-item pt-3" id="pageItem"><a href="#pageSubMenu" class="nav-link dropdown-toggle text-white" data-toggle="collapse" aria-expanded="false" role="button"><i class="fa fa-folder"></i> <span>Companies</span></a>
         <div class="dropdown-menu mr-4" id="pageSubMenu">
           <h6 class="dropdown-header">Companies:</h6>

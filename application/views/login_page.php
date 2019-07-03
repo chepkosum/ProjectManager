@@ -17,5 +17,5 @@
         <input type="password" name="password" required class="form-control" id="pwd">
     </div>
     <input type="submit" value="Login">
-    <span class="float-right"><a href="<?= base_url() . 'register'; ?>" class="btn btn-primary">Register</a></span>
+    
 </form>

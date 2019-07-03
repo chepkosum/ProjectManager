@@ -24,6 +24,7 @@ class Ari extends CI_Controller{
 
 	public function index(){
 		$this->load->view('ari/header.php');
+        $this->load->view('ari/dashboard.php');
 		$this->load->view('ari/footer');
 	}
 	public function all_companies(){
@@ -31,7 +32,12 @@ class Ari extends CI_Controller{
 		$this->load->view('ari/header.php');
 	    $this->load->view('ari/all_companies', $data);
 	    $this->load->view('ari/footer');
+
 	}
+    public function company_count(){
+        $data= $this->Ari_model->company_count();
+        echo $data;
+    }
 	public function edit_company($id){
 		$data['company']=$this->Ari_model->edit_company($id);
 		$this->load->view('ari/header.php');

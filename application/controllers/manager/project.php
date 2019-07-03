@@ -6,7 +6,8 @@ class Project extends CI_Controller{
 		$this->load->helper('url');
 		$this->load->library(['form_validation','session']);
 		$this->load->database();
-		$this->load->model('manager/Project_model');
+		$this->load->model('manager/Developer_model');
+        $this->load->model('manager/Project_model');
          if(!$this->session->userdata('level')){
             redirect(base_url().'login');
          }
@@ -27,6 +28,8 @@ class Project extends CI_Controller{
 	}
 	public function all_projects(){
 		$data['projects'] = $this->Project_model->all_projects();
+        $data['delivers']= $this->Project_model->all_deliverables();
+        $data['developers']=$this->Developer_model->all_developers();
 
 		$this->load->view('manager/header.php');
 	    $this->load->view('manager/all_projects', $data);
@@ -37,7 +40,22 @@ class Project extends CI_Controller{
 		$this->load->view('manager/header.php');
 	    $this->load->view('manager/edit_project', $data);
 	    $this->load->view('manager/footer');
+
 	}
+    public function assign_project($id){
+        $developer=$this->input->post('developer');
+    }
+        //$data=['developer'];
+    public function mark($id){
+        $data=['manager_mark'=>'yes'];
+        $result=$this->Project_model->update_deliverable($id,$data);
+        if($result){
+            redirect(base_url().'manager/project/all_projects');
+        }
+        else{
+
+        }
+    }
 
 	public function update_project($id){
 		$this->form_validation->set_rules('company_name', ' Company Name is Required', 'required|min_length[3]');
@@ -71,7 +89,8 @@ class Project extends CI_Controller{
 	    }
 	public function add_project(){
 		$this->load->view('manager/header.php');
-		$this->load->view('manager/add_project_form');
+        $data['developers']=$this->Developer_model->all_developers();
+		$this->load->view('manager/add_project_form',$data);
 		$this->load->view('manager/footer');
 
 	}
@@ -99,6 +118,7 @@ class Project extends CI_Controller{
 			$end_date= $this->input->post('end_date');
 			$manager_id=$this->session->userdata('user_id');
             $deliverables= $this->input->post('deliverables');
+            $developers= $this->input->post('developers');
             $company_id=$this->session->userdata('company_id');
 
             $data = [
@@ -106,14 +126,20 @@ class Project extends CI_Controller{
             ];
 
             //pass the input values to the register model
-            $insert_data = $this->Project_model->add_project($data,$deliverables);
+            $insert_data = $this->Project_model->add_project($data,$deliverables,$developers);
 
             //if data inserted then set the success message and redirect to login page
-            if ($insert_data==true) {
+            if ($insert_data===true) {
                 $this->session->set_flashdata('msg', 'Successfully added project');
                 redirect(base_url() . 'manager/project/all_projects');
             }
+            else{
+                $this->session->set_flashdata('msg', 'Something happened(Error)');
+                redirect(base_url() . 'manager/project/add_project');
+
+            }
         }
 	}
+
 }
 ?>

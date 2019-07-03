@@ -17,7 +17,9 @@ class Login extends CI_Controller {
     }
 
     public function index() {
+
         //check if the user is already logged in 
+        /*
         $level= $this->session->userdata('level');
         if($level==='ari'){
                 redirect(base_url().'ari');
@@ -32,6 +34,7 @@ class Login extends CI_Controller {
                 redirect(base_url().'developer/Dashboard');
 
             }
+            */
         
         //if not load the login page
         $this->load->view('header');

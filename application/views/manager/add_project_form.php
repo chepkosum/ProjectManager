@@ -1,25 +1,21 @@
 <script type="text/javascript">
 $(document).ready(function(){
-    var maxField = 10; //Input fields increment limitation
-    var addButton = $('.add_button'); //Add button selector
-    var wrapper = $('.field_wrapper'); //Input field wrapper
-    var fieldHTML = '<div><input type="text" name="deliverables[]" value=""/><a href="javascript:void(0);" class="remove_button">remove</a></div>'; //New input field html 
-    var x = 1; //Initial field counter is 1
+    //group add limit
+    var maxGroup = 10;
     
-    //Once add button is clicked
-    $(addButton).click(function(){
-        //Check maximum number of input fields
-        if(x < maxField){ 
-            x++; //Increment field counter
-            $(wrapper).append(fieldHTML); //Add field html
+    //add more fields group
+    $(".addMore").click(function(){
+        if($('body').find('.fieldGroup').length < maxGroup){
+            var fieldHTML = '<div class="form-group fieldGroup">'+$(".fieldGroupCopy").html()+'</div>';
+            $('body').find('.fieldGroup:last').after(fieldHTML);
+        }else{
+            alert('Maximum '+maxGroup+' groups are allowed.');
         }
     });
     
-    //Once remove button is clicked
-    $(wrapper).on('click', '.remove_button', function(e){
-        e.preventDefault();
-        $(this).parent('div').remove(); //Remove field html
-        x--; //Decrement field counter
+    //remove fields group
+    $("body").on("click",".remove",function(){ 
+        $(this).parents(".fieldGroup").remove();
     });
 });
 </script>
@@ -29,9 +25,10 @@ $(document).ready(function(){
     <h2>Add Project</h2>
     <hr />
     <!-- show error messages if the form validation fails -->
-    <?php if ($this->session->flashdata()) { ?>
+    <?php  if ($this->session->flashdata()) { ?>
         <div class="alert alert-danger">
             <?=$this->session->flashdata('errors'); ?>
+            <?= $this->session->flashdata('msg'); ?>
         </div>
     <?php } ?>
     <div class="form-group">
@@ -51,8 +48,22 @@ $(document).ready(function(){
         <label for="email">Deliverables:</label>
         <div class="field_wrapper">
     <div>
-        <input type="text" name="deliverables[]" value=""/>
-        <a href="javascript:void(0);" class="add_button" title="Add field">ADD</a>
+        <div class="form-group fieldGroup">
+        <div class="input-group">
+            <input type="text" name="deliverables[]" class="form-control" placeholder="Enter Deliverable name"/>
+            <select name="developers[]">
+                <?php foreach ($developers as $developer) {?>
+                    <option value="<?php echo $developer->user_id?>"><?php echo $developer->full_name?></option>
+                <?php
+                }
+                ?>
+                
+            </select>
+            <div class="input-group-addon"> 
+                <a style="width:70px" href="javascript:void(0)" class="btn btn-success addMore"><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true"></span> Add</a>
+            </div>
+        </div>
+    </div>
     </div>
 </div>
     </div>
@@ -61,4 +72,20 @@ $(document).ready(function(){
     <input class="btn btn-primary"  type="submit" value="Add Project">
 </div>
 </form>
+</div>
+<div class="form-group fieldGroupCopy" style="display: none;">
+    <div class="input-group">
+       <input type="text" name="deliverables[]" class="form-control" placeholder="Enter Deliverable name"/>
+            <select name="developers[]">
+                <?php foreach ($developers as $developer) {?>
+                    <option value="<?php echo $developer->user_id;?>"><?php echo $developer->full_name?></option>
+                <?php
+                }
+                ?>
+                
+            </select>
+        <div class="input-group-addon"> 
+            <a style="width:70px" href="javascript:void(0)" class="btn btn-danger remove"><span  class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span> Remove</a>
+        </div>
+    </div>
 </div>
