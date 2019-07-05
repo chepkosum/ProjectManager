@@ -23,7 +23,7 @@
     <?php } ?>
 <?php foreach($all_companies as $company){?>
 <div class="card">
-  <img src="<?php echo base_url('assets/img/logo.jpg'); ?>" alt="Logo" style="width:100%">
+  <img class='logo' src="<?php echo base_url('assets/img/logo.jpg'); ?>" alt="Logo" style="width:100%">
   <div class="container">
     <h4><b><?php echo $company->company_name; ?></b></h4> 
     <p>P.O BOX <?php echo $company->email; ?></p> 

@@ -27,6 +27,17 @@ class Ari extends CI_Controller{
         $this->load->view('ari/dashboard.php');
 		$this->load->view('ari/footer');
 	}
+    public function reports(){
+        $this->load->view('ari/header.php');
+        $this->load->view("ari/reports.php",array());
+        $this->load->view('ari/footer.php');
+
+    }
+    public function companies_page()
+     {
+
+         
+     }
 	public function all_companies(){
 		$data['all_companies'] = $this->Ari_model->all_companies();
 		$this->load->view('ari/header.php');
@@ -36,6 +47,18 @@ class Ari extends CI_Controller{
 	}
     public function company_count(){
         $data= $this->Ari_model->company_count();
+        echo $data;
+    }
+     public function manager_count(){
+        $data= $this->Ari_model->manager_count();
+        echo $data;
+    }
+     public function developer_count(){
+        $data= $this->Ari_model->developer_count();
+        echo $data;
+    }
+     public function task_count(){
+        $data= $this->Ari_model->task_count();
         echo $data;
     }
 	public function edit_company($id){

@@ -46,7 +46,7 @@ $(document).ready(function () {
         <a href="#" class="dropdown-item">Manage massages</a> </div>
     </li>
     <li class="nav-item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-user-circle"></i></a>
-      <div class="dropdown-menu dropdown-menu-right"><a href="#" class="dropdown-item">Setting</a><a href="#" class="dropdown-item">Activity Log</a>
+      <div class="dropdown-menu dropdown-menu-right"><a href="<?=base_url().'developer/developer_profile';?>" class="dropdown-item">Profile</a><a href="<?=base_url().'developer/developer_profile/password';?>" class="dropdown-item">Change Password</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="<?=base_url().'login/logout';?>">Logout</a> </div>
         

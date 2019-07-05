@@ -11,6 +11,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/style.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script> 
 <script type="text/javascript">
   // JavaScript Document
 $(document).ready(function () {
@@ -62,14 +65,18 @@ $(document).ready(function () {
         <div class="dropdown-menu mr-4" id="pageSubMenu">
           <h6 class="dropdown-header">Companies:</h6>
           <a href="<?=base_url().'ari/all_companies';?>" class="dropdown-item">All Companies</a> <a href="<?=base_url().'ari/add_company';?>" class="dropdown-item">Add Company</a>
+          <!--
           <div class="dropdown-divider"></div>
           <h6 class="dropdown-header">Geographical locations</h6>
           <a href="#" class="dropdown-item">Local Companies</a><a href="#" class="dropdown-item">International Companies</a> </div>
+        -->
       </li>
       <li class="nav-item pt-3"><a href="#" class="nav-link text-white"><i class="fa fa-area-chart"></i> <span>Charts</span></a> </li>
-      <li class="nav-item pt-3"><a href="index.html" class="nav-link text-white"><i class="fa fa-table"></i> <span>Reports</span></a> </li>
+      <li class="nav-item pt-3"><a href="<?=base_url().'ari/reports';?>" class="nav-link text-white"><i class="fa fa-table"></i> <span>Reports</span></a> </li>
     </ul>
   </nav>
+
+
   <!-- Content -->
   <div id="wrapper-content">
     

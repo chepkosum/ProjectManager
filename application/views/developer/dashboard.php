@@ -1,3 +1,9 @@
+ <?php if ($this->session->flashdata()) { ?>
+        <div class="alert alert-warning">
+            <?= $this->session->flashdata('msg'); ?>
+            <?= $this->session->flashdata('message'); ?>
+        </div>
+    <?php } ?>
  <div  class="container-fluid mt-4"> 
       <!-- Breadrumb -->
       <ul class="breadcrumb">

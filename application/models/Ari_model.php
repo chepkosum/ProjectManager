@@ -27,6 +27,19 @@ class Ari_model extends CI_Model{
    $query=$this->db->get('company');
    return $query->num_rows();
 }
+ public function manager_count(){
+   $query=$this->db->get_where('users',array('user_type'=>'manager'));
+   return $query->num_rows();
+}
+ public function developer_count(){
+   $query=$this->db->get_where('users',array('user_type'=>'developer'));
+   return $query->num_rows();
+}
+ public function task_count(){
+    $query=$this->db->get('deliverables');
+   
+   return $query->num_rows();
+}
 
 public function edit_company($id){
    $query=$this->db->get_where('company',array('company_id'=>$id));
